@@ -1,9 +1,10 @@
-// app/layout.tsx
-
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import dynamic from "next/dynamic";
+
+// import Sidebar as a client component (dynamic import works well too)
+const Sidebar = dynamic(() => import("@/components/Sidebar/Sidebar"), { ssr: false });
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,9 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex h-screen w-full overflow-hidden">
+        <div className="flex min-h-screen">
           <Sidebar />
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 bg-background min-h-screen">
             {children}
           </div>
         </div>
