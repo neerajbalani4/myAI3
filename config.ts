@@ -25,7 +25,7 @@ export const AI_NAME = "Tool Scout";
 export const OWNER_NAME = "Neeraj Balani";
 
 export const WELCOME_MESSAGE = `
-👋 Hey there! I'm ${AI_NAME}, your personal AI-tool guide.
+👋 Hey there! I'm ${AI_NAME}, your personal AI-tool guide. I caan make mistakes, check important info
 
 Tell me what you want to do—*create music, edit videos, generate images, build chatbots, analyze data, anything!*  
 I'll instantly recommend the best AI platform for your task.
