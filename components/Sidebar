@@ -1,0 +1,43 @@
+"use client";
+
+import Link from "next/link";
+import { Plus, History, Library, Settings } from "lucide-react";
+
+export default function Sidebar() {
+  return (
+    <aside className="
+      fixed left-0 top-0 h-full w-64 
+      bg-[#0A0A0A]/95 border-r border-[#2A2A2A]
+      backdrop-blur-xl shadow-2xl z-50 
+      text-white flex flex-col
+    ">
+      <div className="p-5 border-b border-[#2A2A2A]">
+        <h1 className="text-xl font-bold tracking-wide bg-gradient-to-r from-yellow-400 to-yellow-700 bg-clip-text text-transparent">
+          MyAI3
+        </h1>
+      </div>
+
+      <nav className="flex-1 px-4 py-6 space-y-3">
+        <Link href="/" className="sidebar-btn">
+          <Plus className="size-5" /> New Chat
+        </Link>
+
+        <Link href="/chats" className="sidebar-btn">
+          <History className="size-5" /> Your Chats
+        </Link>
+
+        <Link href="/library" className="sidebar-btn">
+          <Library className="size-5" /> Library
+        </Link>
+
+        <Link href="/settings" className="sidebar-btn">
+          <Settings className="size-5" /> Settings
+        </Link>
+      </nav>
+
+      <div className="p-4 text-xs text-gray-400">
+        © {new Date().getFullYear()} MyAI3
+      </div>
+    </aside>
+  );
+}
