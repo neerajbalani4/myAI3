@@ -1,8 +1,9 @@
+// app/layout.tsx
+
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// --- FIX: Updated the import path to match the expected nested structure ---
-import Sidebar from "@/components/Sidebar/Sidebar"; 
+import Sidebar from "@/components/Sidebar/Sidebar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -22,13 +23,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${geistMono.variable} antialiased flex`}>
-        {/* Sidebar */}
-        <Sidebar />
-
-        {/* Main content */}
-        <div className="flex-1">
-          {children}
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+        <div className="flex h-screen w-full overflow-hidden">
+          <Sidebar />
+          <div className="flex-1 overflow-hidden">
+            {children}
+          </div>
         </div>
       </body>
     </html>
