@@ -1,0 +1,32 @@
+"use client";
+
+import { useState } from "react";
+
+export default function SettingsPage() {
+  const [language, setLanguage] = useState(
+    localStorage.getItem("myai3-lang") || "en"
+  );
+
+  const saveLang = (lang: string) => {
+    setLanguage(lang);
+    localStorage.setItem("myai3-lang", lang);
+  };
+
+  return (
+    <div className="p-10 text-white">
+      <h1 className="text-3xl font-bold mb-6">Settings</h1>
+
+      <h2 className="text-lg mb-2">Language</h2>
+      <select
+        value={language}
+        onChange={(e) => saveLang(e.target.value)}
+        className="bg-black border border-white/20 p-3 rounded-lg"
+      >
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="es">Spanish</option>
+        <option value="ar">Arabic</option>
+      </select>
+    </div>
+  );
+}
