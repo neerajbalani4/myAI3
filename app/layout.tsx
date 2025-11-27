@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "MyAI3",
-  description: "MyAI3",
+  description: "MyAI3 — Tool Scout",
 };
 
 export default function RootLayout({
@@ -26,12 +26,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${geistMono.variable} antialiased flex bg-black text-white`}
-      >
-        <Sidebar />
-        <div className="flex-1 h-screen overflow-hidden bg-background">
-          {children}
+      <body className={`${inter.variable} ${geistMono.variable} antialiased bg-background`}>
+        <div className="flex h-screen w-screen">
+          {/* Sidebar (client component) */}
+          <Sidebar />
+
+          {/* Main content area */}
+          <main className="flex-1 h-full overflow-auto">
+            {children}
+          </main>
         </div>
       </body>
     </html>
