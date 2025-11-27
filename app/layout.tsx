@@ -1,8 +1,7 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/sidebar";
+import Sidebar from "@/components/sidebar/Sidebar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MyAI3",
-  description: "MyAI3 — Tool Scout",
+  title: "Tool Scout — AI Tool Guide",
+  description: "Your personal AI tool recommendation assistant.",
 };
 
 export default function RootLayout({
@@ -26,13 +25,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${geistMono.variable} antialiased bg-background`}>
-        <div className="flex h-screen w-screen">
-          {/* Sidebar (client component) */}
+      <body
+        className={`${inter.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+      >
+        <div className="flex h-screen w-screen overflow-hidden">
+          {/* Sidebar */}
           <Sidebar />
 
-          {/* Main content area */}
-          <main className="flex-1 h-full overflow-auto">
+          {/* Main content */}
+          <main className="flex-1 h-full overflow-hidden">
             {children}
           </main>
         </div>
