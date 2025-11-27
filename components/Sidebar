@@ -1,120 +1,94 @@
-// components/sidebar.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Plus, BookMarked, Settings, Globe } from "lucide-react";
 import Link from "next/link";
-import { Plus, BookOpen, Settings } from "lucide-react";
-import Image from "next/image";
-
-type ChatItem = {
-  id: string;
-  title: string;
-  createdAt: number;
-};
-
-const STORAGE_KEY = "toolscout_chats_v1";
+import { Button } from "@/components/ui/button";
 
 export default function Sidebar() {
-  const [chats, setChats] = useState<ChatItem[]>([]);
+  const [chats, setChats] = useState<string[]>([]);
+  const [language, setLanguage] = useState("English");
 
+  // Load stored chats
   useEffect(() => {
-    const raw = typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
-    if (raw) {
-      try {
-        setChats(JSON.parse(raw));
-      } catch {
-        setChats([]);
-      }
-    }
+    const stored = localStorage.getItem("saved-chats");
+    if (stored) setChats(JSON.parse(stored));
   }, []);
 
+  // Save chats
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
-    } catch {
-      // ignore storage errors
-    }
+    localStorage.setItem("saved-chats", JSON.stringify(chats));
   }, [chats]);
 
-  function createNewChat() {
-    const newChat: ChatItem = {
-      id: `chat-${Date.now()}`,
-      title: `Chat #${chats.length + 1}`,
-      createdAt: Date.now(),
-    };
-    setChats([newChat, ...chats]);
-  }
-
-  function openChat(id: string) {
-    // Save selected chat id so pages/components can read it
-    try {
-      localStorage.setItem("toolscout_selected_chat", id);
-    } catch {}
-    // Optionally navigate or reload to let chat component load this chat
-    // location.href = `/`; // keep on same page - the chat UI should read selected id
-  }
-
-  function deleteChat(id: string) {
-    setChats(chats.filter((c) => c.id !== id));
-  }
+  const createNewChat = () => {
+    const id = `Chat ${chats.length + 1}`;
+    setChats([...chats, id]);
+  };
 
   return (
-    <aside className="w-72 min-w-[16rem] max-w-[20rem] bg-black/80 text-white flex flex-col h-screen border-r border-white/5 shadow-lg gold-glow">
-      <div className="px-5 py-6 flex items-center gap-3 border-b border-white/5">
-        <div className="relative w-12 h-12 rounded-full overflow-hidden gold-border">
-          <Image src="/cropped_circle_image.png" alt="logo" fill style={{ objectFit: "cover" }} />
-        </div>
-        <div>
-          <h1 className="text-lg font-semibold gold-text">Tool Scout</h1>
-          <p className="text-xs opacity-80">Crafted by Neeraj Balani</p>
-        </div>
+    <aside className="w-64 bg-gradient-to-b from-black via-[#0c0c0c] to-black text-white p-5 flex flex-col border-r border-white/10">
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <img src="/logo.png" className="w-10 h-10 rounded-full border border-white/20" />
+        <h1 className="font-semibold text-lg">Tool Scout</h1>
       </div>
 
-      <div className="px-4 py-4">
-        <button
-          onClick={createNewChat}
-          className="w-full flex items-center gap-2 justify-center bg-white/6 hover:bg-white/10 rounded-lg py-2 transition"
-        >
-          <Plus className="w-4 h-4" /> New Chat
-        </button>
-      </div>
+      {/* New Chat Button */}
+      <Button
+        className="w-full flex items-center justify-center gap-2 mb-6 bg-white/10 hover:bg-white/20 text-white"
+        onClick={createNewChat}
+      >
+        <Plus size={16} /> New Chat
+      </Button>
 
-      <div className="px-4">
-        <h3 className="text-sm text-muted-foreground mb-2">Your Chats</h3>
-        <div className="flex flex-col gap-2 max-h-[40vh] overflow-y-auto pr-2">
-          {chats.length === 0 ? (
-            <div className="text-xs opacity-70">No chats yet — create one.</div>
-          ) : (
-            chats.map((c) => (
-              <div key={c.id} className="flex items-center justify-between gap-3">
-                <button
-                  onClick={() => openChat(c.id)}
-                  className="flex-1 text-left px-3 py-2 bg-white/6 hover:bg-white/10 rounded-lg"
-                >
-                  <div className="text-sm">{c.title}</div>
-                  <div className="text-xs opacity-60">{new Date(c.createdAt).toLocaleString()}</div>
-                </button>
-                <button
-                  onClick={() => deleteChat(c.id)}
-                  aria-label="Delete chat"
-                  className="px-2 py-1 text-xs opacity-60 hover:opacity-100"
-                >
-                  ✕
-                </button>
-              </div>
-            ))
+      {/* Chat List */}
+      <div>
+        <p className="text-sm text-gray-400 mb-3">Your Chats</p>
+        <div className="space-y-2">
+          {chats.map((chat, index) => (
+            <div
+              key={index}
+              className="w-full px-3 py-2 bg-white/5 rounded-md border border-white/10 hover:bg-white/10 cursor-pointer"
+            >
+              {chat}
+            </div>
+          ))}
+
+          {chats.length === 0 && (
+            <p className="text-gray-500 text-sm">No chats yet.</p>
           )}
         </div>
       </div>
 
-      <div className="mt-auto p-4 border-t border-white/5">
-        <div className="flex flex-col gap-2">
-          <Link href="/library" className="flex items-center gap-3 px-3 py-3 rounded-lg bg-white/5 hover:bg-white/10">
-            <BookOpen className="w-4 h-4" /> Library
-          </Link>
-          <Link href="/settings" className="flex items-center gap-3 px-3 py-3 rounded-lg bg-white/5 hover:bg-white/10">
-            <Settings className="w-4 h-4" /> Settings
-          </Link>
+      {/* Bottom Navigation */}
+      <div className="mt-auto space-y-4 pt-6">
+        <Link
+          href="/library"
+          className="flex items-center gap-3 text-gray-300 hover:text-white px-2 py-2 rounded-md hover:bg-white/10"
+        >
+          <BookMarked size={18} /> Library
+        </Link>
+
+        {/* Settings */}
+        <div className="flex items-center gap-3 text-gray-300 px-2 py-2 hover:text-white hover:bg-white/10 rounded-md cursor-pointer">
+          <Settings size={18} /> Settings
+        </div>
+
+        {/* Language Selector */}
+        <div className="flex items-center gap-3 px-2 py-2 bg-white/5 rounded-md border border-white/10">
+          <Globe size={18} className="text-gray-300" />
+          <select
+            className="bg-transparent text-white outline-none w-full"
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+          >
+            <option className="bg-black" value="English">English</option>
+            <option className="bg-black" value="Hindi">Hindi</option>
+            <option className="bg-black" value="Marathi">Marathi</option>
+            <option className="bg-black" value="Gujarati">Gujarati</option>
+            <option className="bg-black" value="Spanish">Spanish</option>
+            <option className="bg-black" value="French">French</option>
+          </select>
         </div>
       </div>
     </aside>
