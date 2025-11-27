@@ -18,7 +18,6 @@ export const TONE_STYLE_PROMPT = `
 export const TOOL_CALLING_PROMPT = `
 - In order to be as truthful as possible, call tools to gather context before answering. 
 - Always search the vector database.
-- Always check the vector database to retrieve the best AI tool matches.
 - Your priority: match the user's goal to the best AI platform available.
 `;
 
