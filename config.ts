@@ -33,7 +33,17 @@ I'll instantly recommend the best AI platform for your task.
 Let’s find the perfect tool for you, crafted with ❤️ by ${OWNER_NAME}.
 `;
 
-export const CLEAR_CHAT_TEXT = "Clear and New";
+export const INPUT_PLACEHOLDER = "Type what you want to do… e.g., 'I want to generate a song' 🎵";
+export const TYPING_INDICATOR = `${AI_NAME} is thinking… 🔍`;
+export const CLEAR_CHAT_TEXT = "🧹 New Chat";
+export const TAGLINE = "Your AI-Tool Finder Assistant ✨";
+
+export const HEADER_TITLE = "Chat with Markus, your AI Tool Advisor";
+export const HEADER_SUBTEXT = "Smart recommendations. Instant guidance.";
+
+
+
+
 
 export const MODERATION_DENIAL_MESSAGE_SEXUAL = "I can't discuss explicit sexual content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_SEXUAL_MINORS = "I can't discuss content involving minors in a sexual context. Please ask something else.";
