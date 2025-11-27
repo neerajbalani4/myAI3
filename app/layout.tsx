@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+mport type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar/Sidebar";
+// --- FIX: Updated the import path to match the expected nested structure ---
+import Sidebar from "@/components/Sidebar/Sidebar"; 
 
 const inter = Inter({
   variable: "--font-inter",
