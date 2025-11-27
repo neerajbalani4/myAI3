@@ -1,34 +1,59 @@
-
-
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function ChatHeaderBlock({
-    children,
-    className
+  children,
+  className,
 }: {
-    children?: React.ReactNode,
-    className?: string
+  children?: React.ReactNode;
+  className?: string;
 }) {
-    return (
-        <div className={cn("gap-2 flex flex-1 items-center", className)}>
-            {children}
-        </div>
-    );
+  return (
+    <div className={cn("gap-2 flex flex-1 items-center", className)}>
+      {children}
+    </div>
+  );
 }
 
 export function ChatHeader({ children }: { children: React.ReactNode }) {
-    return (
-        <div
-            className={cn(
-                "w-full flex items-center justify-between px-6 py-4",
-                // 🔥 PREMIUM UI STYLES BELOW
-                "backdrop-blur-md bg-white/10 dark:bg-black/20",
-                "border-b border-white/10 dark:border-white/5",
-                "shadow-lg shadow-black/5",
-                "sticky top-0 z-50"
-            )}
-        >
-            {children}
+  return (
+    <header
+      className="
+        w-full
+        flex 
+        items-center 
+        py-6 
+        px-6 
+        luxury-gradient 
+        gold-border 
+        rounded-b-2xl
+        shadow-xl
+        sticky top-0 
+        z-50
+      "
+    >
+      <div className="flex items-center gap-4">
+        <Image
+          src="/logo.png"
+          alt="Markus Logo"
+          width={48}
+          height={48}
+          className="rounded-full gold-glow"
+        />
+
+        <div>
+          <h1 className="text-2xl font-bold gold-text tracking-wide">
+            Tool Scout — Your AI Tool Guide
+          </h1>
+          <p className="text-xs text-neutral-400">
+            Crafted by Neeraj Balani • Powered by AI
+          </p>
         </div>
-    );
+      </div>
+
+      <div className="flex-1"></div>
+
+      {children}
+    </header>
+  );
 }
