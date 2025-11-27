@@ -78,3 +78,10 @@ export const MessageAvatar = ({
     <AvatarFallback>{name?.slice(0, 2) || "ME"}</AvatarFallback>
   </Avatar>
 );
+<div className="chat-bubble p-4 rounded-xl max-w-3xl ml-auto">
+  {message.text}
+</div>
+
+<div className="chat-bubble-ai p-4 rounded-xl max-w-3xl gold-border">
+  <p className="text-neutral-200">{message.text}</p>
+</div>
