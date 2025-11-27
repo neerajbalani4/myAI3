@@ -36,8 +36,8 @@ export function ChatHeader({ children }: { children: React.ReactNode }) {
         <Image
           src="/logo.png"
           alt="Markus Logo"
-          width={48}
-          height={48}
+          width={60}
+          height={60}
           className="rounded-full gold-glow"
         />
 
