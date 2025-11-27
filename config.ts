@@ -24,9 +24,16 @@ export const DATE_AND_TIME = getDateAndTime();
 export const AI_NAME = "Markus";
 export const OWNER_NAME = "Neeraj Balani";
 
-export const WELCOME_MESSAGE = `Hello! I'm ${AI_NAME}, an AI assistant that will help you find suitable AI tool for for your task created by ${OWNER_NAME}.`
+export const WELCOME_MESSAGE = `
+👋 Hey there! I'm ${AI_NAME}, your personal AI-tool guide.
 
-export const CLEAR_CHAT_TEXT = "New";
+Tell me what you want to do—*create music, edit videos, generate images, build chatbots, analyze data, anything!*  
+I'll instantly recommend the best AI platform for your task.
+
+Let’s find the perfect tool for you, crafted with ❤️ by ${OWNER_NAME}.
+`;
+
+export const CLEAR_CHAT_TEXT = "Clear and New";
 
 export const MODERATION_DENIAL_MESSAGE_SEXUAL = "I can't discuss explicit sexual content. Please ask something else.";
 export const MODERATION_DENIAL_MESSAGE_SEXUAL_MINORS = "I can't discuss content involving minors in a sexual context. Please ask something else.";
