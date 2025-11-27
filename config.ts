@@ -21,7 +21,7 @@ function getDateAndTime(): string {
 
 export const DATE_AND_TIME = getDateAndTime();
 
-export const AI_NAME = "Markus";
+export const AI_NAME = "Tool Scout";
 export const OWNER_NAME = "Neeraj Balani";
 
 export const WELCOME_MESSAGE = `
