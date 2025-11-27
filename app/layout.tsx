@@ -1,4 +1,4 @@
-mport type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // --- FIX: Updated the import path to match the expected nested structure ---
