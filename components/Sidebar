@@ -1,43 +1,97 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Plus, Library, Settings } from "lucide-react";
 import Link from "next/link";
-import { Plus, History, Library, Settings } from "lucide-react";
+
+type ChatMeta = {
+  id: string;
+  name: string;
+};
 
 export default function Sidebar() {
+  const [chats, setChats] = useState<ChatMeta[]>([]);
+  const STORAGE_KEY = "myai3-chat-list";
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) setChats(JSON.parse(stored));
+  }, []);
+
+  const saveChats = (updated: ChatMeta[]) => {
+    setChats(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  };
+
+  const createChat = () => {
+    const newChat: ChatMeta = {
+      id: `${Date.now()}`,
+      name: `Chat #${chats.length + 1}`,
+    };
+    const updated = [...chats, newChat];
+    saveChats(updated);
+
+    // Redirect to main page with cleared chat
+    window.location.href = "/";
+    localStorage.removeItem("chat-messages");
+  };
+
+  const openChat = (chatId: string) => {
+    const selected = chats.find((c) => c.id === chatId);
+    if (!selected) return;
+
+    const chatKey = `chat-${chatId}`;
+    const stored = localStorage.getItem(chatKey);
+
+    if (stored) {
+      localStorage.setItem("chat-messages", stored);
+    }
+
+    window.location.href = "/";
+  };
+
   return (
-    <aside className="
-      fixed left-0 top-0 h-full w-64 
-      bg-[#0A0A0A]/95 border-r border-[#2A2A2A]
-      backdrop-blur-xl shadow-2xl z-50 
-      text-white flex flex-col
-    ">
-      <div className="p-5 border-b border-[#2A2A2A]">
-        <h1 className="text-xl font-bold tracking-wide bg-gradient-to-r from-yellow-400 to-yellow-700 bg-clip-text text-transparent">
-          MyAI3
-        </h1>
+    <div className="w-64 bg-[#050505] text-white flex flex-col p-4 space-y-6 h-screen border-r border-white/10">
+      
+      {/* New Chat Button */}
+      <button
+        onClick={createChat}
+        className="flex items-center gap-2 bg-white/10 p-3 rounded-xl hover:bg-white/20"
+      >
+        <Plus className="w-4 h-4" /> New Chat
+      </button>
+
+      {/* Chats Section */}
+      <div>
+        <h2 className="text-sm opacity-60 mb-2">Your Chats</h2>
+        <div className="flex flex-col gap-2">
+          {chats.map((chat) => (
+            <button
+              key={chat.id}
+              onClick={() => openChat(chat.id)}
+              className="bg-white/5 p-3 rounded-xl hover:bg-white/10 text-left"
+            >
+              {chat.name}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <nav className="flex-1 px-4 py-6 space-y-3">
-        <Link href="/" className="sidebar-btn">
-          <Plus className="size-5" /> New Chat
+      <div className="mt-auto space-y-2">
+        <Link
+          href="/library"
+          className="flex items-center gap-2 bg-white/10 p-3 rounded-xl hover:bg-white/20"
+        >
+          <Library className="w-4 h-4" /> Library
         </Link>
 
-        <Link href="/chats" className="sidebar-btn">
-          <History className="size-5" /> Your Chats
+        <Link
+          href="/settings"
+          className="flex items-center gap-2 bg-white/10 p-3 rounded-xl hover:bg-white/20"
+        >
+          <Settings className="w-4 h-4" /> Settings
         </Link>
-
-        <Link href="/library" className="sidebar-btn">
-          <Library className="size-5" /> Library
-        </Link>
-
-        <Link href="/settings" className="sidebar-btn">
-          <Settings className="size-5" /> Settings
-        </Link>
-      </nav>
-
-      <div className="p-4 text-xs text-gray-400">
-        © {new Date().getFullYear()} MyAI3
       </div>
-    </aside>
+    </div>
   );
 }
